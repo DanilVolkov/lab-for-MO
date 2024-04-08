@@ -3,13 +3,15 @@ import numpy as np
 
 class NelderMead:
 
-    def solve(self, f, n, alpha=1, beta=0.5, gamma=2):
+    def solve(self, f, n, s_point,alpha=1, beta=0.5, gamma=2):
 
         x0 = np.eye(n + 1, n)
-
-        f0 = [f(x) for x in x0]
+        if not x0.__contains__(s_point):
+            x0[n] = s_point
 
         for pepe in range(1000):
+            f0 = [f(x) for x in x0]
+
             if f0[0] > f0[1]:
                 f_xh = f0[0]
                 h = 0
@@ -45,16 +47,10 @@ class NelderMead:
                 f_xe = f(xe)
                 if f_xe < f_xr:
                     x0[h] = xe
-                    f0[h] = f_xe  # )))
-                    f_xh = f_xe  # )))
                 elif f_xr < f_xe:
                     x0[h] = xr
-                    f0[h] = f_xr  # )))
-                    f_xh = f_xr  # )))
             elif f_xl < f_xr < f_xg:
                 x0[h] = xr
-                f0[h] = f_xr  # )))
-                f_xh = f_xr  # )))
             elif f_xg < f_xr < f_xh:
                 xr, x0[h] = x0[h], xr
                 f_xr, f0[h] = f0[h], f_xr
@@ -76,5 +72,6 @@ class NelderMead:
             disp = np.var(x0)
             print(disp)
             # по осям... disp_self = (sum(x0[:] ** 2) / n) - (sum(x0[:]) / n) ** 2
+            # мб бахнуть формулой Герона площади треугольников - граней и смотреть чтобы она была меньше eps
 
         return x0[n, :]
