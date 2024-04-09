@@ -5,10 +5,8 @@ import numpy as np
 
 nm = NelderMead()
 ps = FuncParser()
-n = 2
-x = [0] * n
-
 n , func = ps.func_pars(input())
+x = [0] * n
 print(func)
 #f = lambda x: 2 * x[0]**4 + x[1]**4 - x[0]**2 - 2*x[1]**2
 f = lambda x: eval(func)
