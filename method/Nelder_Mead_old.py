@@ -1,22 +1,23 @@
 import numpy as np
 
+
 class NelderMead:
-    def solve(self, f, n, alpha = 1, beta = 0.5, gamma = 2):
+    def solve(self, f, n, alpha=1, beta=0.5, gamma=2):
         simplex = np.eye(n + 1, n)
 
         for i in range(1000):
-            #Подготовка
-            f_value = [f(x) for x in simplex]  
+            # Подготовка
+            f_value = [f(x) for x in simplex]
             best, pre_best, worst = 0, 1, 0
-            
-            #Сортировка
+
+            # Сортировка
             f_best = f(simplex[best])
             f_pre_best = f(simplex[pre_best])
             f_worst = f(simplex[worst])
-            if f_pre_best > f_best: 
+            if f_pre_best > f_best:
                 f_pre_best, f_best = f_best, f_pre_best
                 pre_best, best = best, pre_best
-            
+
             for i in range(2, len(simplex)):
                 if f(simplex[i]) >= f_best:
                     f_pre_best = f_best
@@ -32,11 +33,9 @@ class NelderMead:
                     f_worst = f(simplex[i])
                     worst = i
 
-
-            #Центр тяжести
+            # Центр тяжести
 
             center_of_grav = (sum(simplex) - simplex[best]) / n
-
 
             xr = (1 + alpha) * xc - alpha * x0[h]
             f_xr = f(xr)

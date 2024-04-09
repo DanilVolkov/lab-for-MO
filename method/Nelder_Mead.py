@@ -3,44 +3,61 @@ import numpy as np
 
 class NelderMead:
 
-    def calculate(self, f, n, alpha=1.5, beta=1.5, gamma=1.5):
-        x = np.eye(n + 1, n)
-        while True:
-            fun = [f(x0) for x0 in x]
-            fun_xr = min(fun)
-            xr, ind_xr = x[fun.index(fun_xr)], fun.index(fun_xr)
-            fun_xs = max(fun)
-            xs, ind_xs = x[fun.index(fun_xs)], fun.index(fun_xs)
-            x_mid = (sum(x) - xs) / n
-            x_sim = x_mid + alpha * (x_mid - xs)
-            fun_x_sim = f(x_sim)
-            if fun_xr > fun_x_sim:
-                x1 = x_mid + gamma * (x_sim - x_mid)
-                fun_x1 = f(x1)
-                if fun_x_sim > fun_x1:
-                    x[ind_xs] = x1
+    def calculate(self, function, n_dimension, alpha=1.5, beta=1.5, gamma=1.5):
+        # Создаем изначальный симплекс (тетраедр в углу координатной сетки)
+        simplex_vertex = np.eye(n_dimension + 1, n_dimension)
+        # Цикл, пока все вершины симплекса не станут равны с точностью 10^-5
+        while not np.isclose(simplex_vertex, simplex_vertex[0]).all():
+            # Пересчет значений функции в вершинах симплекса
+            function_value = [function(x0) for x0 in simplex_vertex]
+            # Ищем вершину с минимальным значением функции
+            function_min_value = min(function_value)
+            x_for_min_value = simplex_vertex[function_value.index(function_min_value)]
+            # Ищем вершину с максимальным значением функции
+            function_max_value = max(function_value)
+            ind_x_for_max_value = function_value.index(function_max_value)
+            x_for_max_value = simplex_vertex[ind_x_for_max_value]
+            # Ищем среднюю точку (исключая вершину, соответствующую максимальному значению функции)
+            average_x = (sum(simplex_vertex) - x_for_max_value) / n_dimension
+            # Симметрично отражаем вершину, соответсвующую максимальному значению
+            symmetrical_x = average_x + alpha * (average_x - x_for_max_value)
+            function_symmetrical_x_value = function(symmetrical_x)
+            # Если значение функции в отраженной точке меньше текущего минимума
+            if function_min_value > function_symmetrical_x_value:
+                # Вспомогательную точку с помощью параметра gamma
+                x1 = average_x + gamma * (symmetrical_x - average_x)
+                # Если в ней значение меньше, то меняем в симплексе точку максимального значения на вспомогательную
+                if function_symmetrical_x_value > function(x1):
+                    simplex_vertex[ind_x_for_max_value] = x1
+                # Иначе, меняем на симметрично отраженную точку максимального значения
                 else:
-                    x[ind_xs] = x_sim
+                    simplex_vertex[ind_x_for_max_value] = symmetrical_x
             else:
-                fun_xss = fun_xr
-                for i in range(n + 1):
-                    if i != ind_xs and fun_xss < fun[i]:
-                        fun_xss = fun[i]
-                        xss = x[i]
-                        ind_xss = i
-                if fun_xss >= fun_x_sim:
-                    x[ind_xs] = x_sim
-                if fun_x_sim < fun_xs:
-                    fun_xl = fun_x_sim
-                    xl = xs
+                # Ищем второе максимальное значение функции
+                function_premax_value = function_min_value
+                for i in range(n_dimension + 1):
+                    if i != ind_x_for_max_value and function_premax_value < function_value[i]:
+                        function_premax_value = function_value[i]
+                # Если второй максимум больше значения функции в симметрично отраженной точке,
+                # меняем точку максимума на ее отражение
+                if function_premax_value >= function_symmetrical_x_value:
+                    simplex_vertex[ind_x_for_max_value] = symmetrical_x
+                # Если значение в отражении максимума меньше масимума, то вспомогательная точка - это отражение
+                if function_symmetrical_x_value < function_max_value:
+                    function_x2_value = function_symmetrical_x_value
+                    x2 = symmetrical_x
+                # Иначе - точка максимума
                 else:
-                    fun_xl = fun_xs
-                    xl = x_sim
-                xll = x_mid + beta * (xl - x_mid)
-                fun_xll = f(xll)
-                if fun_xll > fun_xl:
-                    x = x + 0.5 * (xr - x)
+                    function_x2_value = function_max_value
+                    x2 = x_for_max_value
+                # Построим отражение вспомогательной точки с помощью beta, вычислим функцию в нем
+                x3 = average_x + beta * (x2 - average_x)
+                function_x3_value = function(x3)
+                # Если это значение больше значения функции во вспомогательной точке,то "ужимаем" весь симплекс
+                if function_x3_value > function_x2_value:
+                    simplex_vertex = simplex_vertex + 0.5 * (x_for_min_value - simplex_vertex)
+                # Иначе меняем точку максимума на это отражение
                 else:
-                    x[ind_xs] = xll
-        return x
-    
+                    simplex_vertex[ind_x_for_max_value] = x3
+        # точность выхода из цикла 10^-5, мб стоит округлить эту байду
+        return sum(simplex_vertex) / (n_dimension + 1)
