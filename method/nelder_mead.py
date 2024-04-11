@@ -26,7 +26,8 @@ class NelderMead:
             if function_min_value > function_symmetrical_x_value:
                 # Вспомогательную точку с помощью параметра gamma
                 x1 = average_x + gamma * (symmetrical_x - average_x)
-                # Если в ней значение меньше, то меняем в симплексе точку максимального значения на вспомогательную
+                # Если в ней значение меньше,
+                # то меняем в симплексе точку максимального значения на вспомогательную
                 if function_symmetrical_x_value > function(x1):
                     simplex_vertex[ind_x_for_max_value] = x1
                 # Иначе, меняем на симметрично отраженную точку максимального значения
@@ -42,7 +43,8 @@ class NelderMead:
                 # меняем точку максимума на ее отражение
                 if function_premax_value >= function_symmetrical_x_value:
                     simplex_vertex[ind_x_for_max_value] = symmetrical_x
-                # Если значение в отражении максимума меньше масимума, то вспомогательная точка - это отражение
+                # Если значение в отражении максимума меньше масимума,
+                # то вспомогательная точка - это отражение
                 if function_symmetrical_x_value < function_max_value:
                     function_x2_value = function_symmetrical_x_value
                     x2 = symmetrical_x
@@ -53,7 +55,8 @@ class NelderMead:
                 # Построим отражение вспомогательной точки с помощью beta, вычислим функцию в нем
                 x3 = average_x + beta * (x2 - average_x)
                 function_x3_value = function(x3)
-                # Если это значение больше значения функции во вспомогательной точке,то "ужимаем" весь симплекс
+                # Если это значение больше значения функции во вспомогательной точке,
+                # то "ужимаем" весь симплекс
                 if function_x3_value > function_x2_value:
                     simplex_vertex = simplex_vertex + 0.5 * (x_for_min_value - simplex_vertex)
                 # Иначе меняем точку максимума на это отражение

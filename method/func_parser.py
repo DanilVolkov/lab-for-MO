@@ -4,36 +4,33 @@ class FuncParser:
         arg = False
         num_of_x = ''
         nums = set()
-        for i in range(len(s)):
-            if s[i] == 'x':
+        for c in s:
+            if c == 'x':
                 answ.append('x[')
                 arg = True
-            elif s[i].isdigit():
-                num_of_x+=s[i]
-            elif s[i].isdigit() == False and arg == True:
-                answ.append(str(int(num_of_x) - 1) +']')
+            elif c.isdigit():
+                num_of_x += c
+            elif not c.isdigit() and arg:
+                answ.append(str(int(num_of_x) - 1) + ']')
                 nums.add(int(num_of_x))
                 arg = False
                 num_of_x = ''
-                if s[i] == '^':
+                if c == '^':
                     answ.append('**')
                 else:
-                    answ.append(s[i])
-            elif s[i].isdigit() == False:
+                    answ.append(c)
+            elif not c.isdigit():
                 if len(num_of_x) > 0:
-                    answ.append(num_of_x + s[i])
+                    answ.append(num_of_x + c)
                     num_of_x = ''
-                elif s[i] == '^':
+                elif c == '^':
                     answ.append('**')
                 else:
-                    answ.append(s[i])
-        if arg == True:
-            answ.append(str(int(num_of_x) - 1) +']')
+                    answ.append(c)
+        if arg:
+            answ.append(str(int(num_of_x) - 1) + ']')
             nums.add(int(num_of_x))
         if len(num_of_x) > 0:
             answ.append(num_of_x)
             num_of_x = ''
-            
-            
         return len(nums), ''.join(answ)
-    
