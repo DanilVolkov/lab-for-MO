@@ -2,13 +2,12 @@ from nelder_mead import NelderMead
 from func_parser import FuncParser
 # import scipy as sp
 
-nm = NelderMead()
-ps = FuncParser()
-n, func = ps.func_pars(input())
+with open("input.txt", 'r', encoding='UTF-8') as file:
+    s = file.readline()
+n, func = FuncParser.func_pars(s)
 print(func)
-# f = lambda x: 2 * x[0]**4 + x[1]**4 - x[0]**2 - 2*x[1]**2
-f = lambda x: eval(func) # pylint is crazy about this string
-x_ans = nm.calculate(f, n)
+f = lambda x: eval(func)
+x_ans = NelderMead.calculate(f, n)
 print(x_ans)
 print(f(x_ans))
 # s_point = np.array([0, 0])

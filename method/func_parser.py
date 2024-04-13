@@ -1,5 +1,6 @@
 class FuncParser:
-    def func_pars(self, s):
+    @staticmethod
+    def func_pars(s):
         answ = []
         arg = False
         num_of_x = ''
