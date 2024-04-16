@@ -1,3 +1,5 @@
+# хуета, исправить
+
 class FuncParser:
     @staticmethod
     def func_pars(s):
