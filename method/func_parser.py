@@ -1,6 +1,3 @@
-# remake it all
-# burn it down
-
 class FuncParser:
     @staticmethod
     def func_pars(s):
