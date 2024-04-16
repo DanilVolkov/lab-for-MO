@@ -1,69 +1,60 @@
 import numpy as np
 
 
-class NelderMead:
-    @staticmethod
-    def _symmetrical_point(x1, x2, a):
-        return x1 + a * (x2 - x1)
+def sym_point(x1, x2, a):
+    return x1 + a * (x2 - x1)
 
-    @staticmethod
-    def calculate(function, n_dimension, alpha=1.5, beta=1.5, gamma=1.5):
-        # Создаем изначальный симплекс (тетраедр в углу координатной сетки)
-        simplex_vertex = np.eye(n_dimension + 1, n_dimension)
-        # Цикл, пока все вершины симплекса не станут равны с точностью 10^-5
-        while not np.isclose(simplex_vertex, simplex_vertex[0]).all():
-            # Пересчет значений функции в вершинах симплекса
-            function_value = [function(x0) for x0 in simplex_vertex]
-            # Ищем вершину с минимальным значением функции
-            function_min_value = min(function_value)
-            x_for_min_value = simplex_vertex[function_value.index(function_min_value)]
-            # Ищем вершину с максимальным значением функции
-            function_max_value = max(function_value)
-            ind_x_for_max_value = function_value.index(function_max_value)
-            x_for_max_value = simplex_vertex[ind_x_for_max_value]
-            # Ищем среднюю точку (исключая вершину, соответствующую максимальному значению функции)
-            average_x = (sum(simplex_vertex) - x_for_max_value) / n_dimension
-            # Симметрично отражаем вершину, соответсвующую максимальному значению
-            symmetrical_x = NelderMead._symmetrical_point(average_x, x_for_max_value, -alpha)
-            function_symmetrical_x_value = function(symmetrical_x)
-            # Если значение функции в отраженной точке меньше текущего минимума
-            if function_min_value > function_symmetrical_x_value:
-                # Вспомогательную точку с помощью параметра gamma
-                x1 = NelderMead._symmetrical_point(average_x, symmetrical_x, gamma)
-                # Если в ней значение меньше,
-                # то меняем в симплексе точку максимального значения на вспомогательную
-                if function_symmetrical_x_value > function(x1):
-                    simplex_vertex[ind_x_for_max_value] = x1
-                # Иначе, меняем на симметрично отраженную точку максимального значения
-                else:
-                    simplex_vertex[ind_x_for_max_value] = symmetrical_x
+
+def avg_but_one_point(arr, ind):
+    return (sum(arr) - arr[ind]) / (len(arr) - 1)
+
+
+def ind_sec_max(arr):
+    sec_max = min(arr)
+    m = arr.index(max(arr))
+    l_arr = len(arr)
+    for i in range(l_arr):
+        if i != m and sec_max < arr[i]:
+            sec_max = arr[i]
+    return arr.index(sec_max)
+
+
+def ind_min_max(arr):
+    return arr.index(min(arr)), arr.index(max(arr))
+
+
+def shrink_points(arr_p, arr_f):
+    ind_min = arr_f.index(min(arr_f))
+    return sym_point(arr_p, arr_p[ind_min], 0.5)
+
+
+def calculate_neldermead(fun, n, alpha=1.5, beta=1.5, gamma=1.5):
+    if alpha <= 0 or beta <= 1 or gamma <= 1 or n <= 0:
+        raise RuntimeError
+    simp = np.eye(n + 1, n)
+    while not np.isclose(simp, simp[0]).all():
+        fun_val = [fun(x0) for x0 in simp]
+        ind_min, ind_max = ind_min_max(fun_val)
+        avg_x = avg_but_one_point(simp, ind_max)
+        sym_x = sym_point(avg_x, simp[ind_max], -alpha)
+        if fun_val[ind_min] > fun(sym_x):
+            x1 = sym_point(avg_x, sym_x, gamma)
+            if fun(sym_x) > fun(x1):
+                simp[ind_max] = x1
             else:
-                # Ищем второе максимальное значение функции
-                function_premax_value = function_min_value
-                for i in range(n_dimension + 1):
-                    if i != ind_x_for_max_value and function_premax_value < function_value[i]:
-                        function_premax_value = function_value[i]
-                # Если второй максимум больше значения функции в симметрично отраженной точке,
-                # меняем точку максимума на ее отражение
-                if function_premax_value >= function_symmetrical_x_value:
-                    simplex_vertex[ind_x_for_max_value] = symmetrical_x
-                # Если значение в отражении максимума меньше масимума,
-                # то вспомогательная точка - это отражение
-                if function_symmetrical_x_value < function_max_value:
-                    function_x2_value = function_symmetrical_x_value
-                    x2 = symmetrical_x
-                # Иначе - точка максимума
-                else:
-                    function_x2_value = function_max_value
-                    x2 = x_for_max_value
-                # Построим отражение вспомогательной точки с помощью beta, вычислим функцию в нем
-                x3 = NelderMead._symmetrical_point(average_x, x2, beta)
-                function_x3_value = function(x3)
-                # Если это значение больше значения функции во вспомогательной точке,
-                # то "ужимаем" весь симплекс
-                if function_x3_value > function_x2_value:
-                    simplex_vertex = NelderMead._symmetrical_point(simplex_vertex, x_for_min_value, 0.5)
-                # Иначе меняем точку максимума на это отражение
-                else:
-                    simplex_vertex[ind_x_for_max_value] = x3
-        return np.round(sum(simplex_vertex) / (n_dimension + 1), 5)
+                simp[ind_max] = sym_x
+        else:
+            if fun_val[ind_sec_max(fun_val)] >= fun(sym_x):
+                simp[ind_max] = sym_x
+            if fun(sym_x) < fun_val[ind_max]:
+                fun_x2 = fun(sym_x)
+                x2 = sym_x
+            else:
+                fun_x2 = fun_val[ind_max]
+                x2 = simp[ind_max]
+            x3 = sym_point(avg_x, x2, beta)
+            if fun(x3) > fun_x2:
+                simp = shrink_points(simp, fun_val)
+            else:
+                simp[ind_max] = x3
+    return np.round(sum(simp) / (n + 1), 5)
