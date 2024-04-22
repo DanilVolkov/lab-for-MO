@@ -26,7 +26,8 @@ def index_min_max(array):
 
 def shrink_points(array_points, array_values):
     index_min = array_values.index(min(array_values))
-    symmetrical_simplex = symmetrical_point(array_points, array_points[index_min], 0.5)
+    symmetrical_simplex = symmetrical_point(array_points,
+                                            array_points[index_min], 0.5)
     return symmetrical_simplex
 
 
@@ -41,7 +42,9 @@ def calculate_neldermead(function, dimension, alpha=1.5, beta=1.5, gamma=1.5):
         index_min, index_max = index_min_max(function_value)
 
         average_x = average_except_one_point(simplex, index_max)
-        symmetrical_x = symmetrical_point(average_x, simplex[index_max], -alpha)
+        symmetrical_x = symmetrical_point(average_x,
+                                          simplex[index_max],
+                                          -alpha)
 
         if function_value[index_min] > function(symmetrical_x):
             x1 = symmetrical_point(average_x, symmetrical_x, gamma)
@@ -51,7 +54,9 @@ def calculate_neldermead(function, dimension, alpha=1.5, beta=1.5, gamma=1.5):
                 simplex[index_max] = symmetrical_x
 
         else:
-            if function_value[index_second_max(function_value)] >= function(symmetrical_x):
+            if function_value[index_second_max(function_value)] >= function(
+                symmetrical_x
+            ):
                 simplex[index_max] = symmetrical_x
 
             if function(symmetrical_x) < function_value[index_max]:
