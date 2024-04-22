@@ -22,6 +22,6 @@ jobs:
         pip install flake8
     - name: Analysing the code with black, isort, flake8
       run: |
-        black .
-        isort .
-        flake8 .
+        black --config .black .
+        isort --settings-file .isort.cfg .
+        flake8 --config .flake8 .
