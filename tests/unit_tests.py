@@ -1,4 +1,5 @@
 import unittest
+
 from method.nelder_mead import calculate_neldermead
 
 

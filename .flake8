@@ -1,0 +1,4 @@
+[flake8]
+exclude = docs, venv
+max-line-length = 79
+ignore = E731
