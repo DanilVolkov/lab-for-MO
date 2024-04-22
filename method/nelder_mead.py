@@ -6,7 +6,8 @@ def symmetrical_point(x1, x2, a):
 
 
 def average_except_one_point(array, exception_index):
-    return (sum(array) - array[exception_index]) / (len(array) - 1)
+    average_point = (sum(array) - array[exception_index]) / (len(array) - 1)
+    return average_point
 
 
 def index_second_max(array):
@@ -25,7 +26,8 @@ def index_min_max(array):
 
 def shrink_points(array_points, array_values):
     index_min = array_values.index(min(array_values))
-    return symmetrical_point(array_points, array_points[index_min], 0.5)
+    symmetrical_simplex = symmetrical_point(array_points, array_points[index_min], 0.5)
+    return symmetrical_simplex
 
 
 def calculate_neldermead(function, dimension, alpha=1.5, beta=1.5, gamma=1.5):
