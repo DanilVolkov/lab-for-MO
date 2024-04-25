@@ -38,4 +38,4 @@ def function_parsing(func: str) -> tuple[int, str]:
     func_result = repl_pow_sym(func)
     func_result = add_math(func_result)
     dimensions = count_variables(func_result)
-    return dimensions, func
+    return dimensions, func_result
