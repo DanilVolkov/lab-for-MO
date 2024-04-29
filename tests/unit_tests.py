@@ -59,7 +59,7 @@ class Test(unittest.TestCase):
         points = np.array([[1, 2], [2, 3], [3, 4]])
         except_index = -1
 
-        expected = RuntimeError
+        expected = Exception
 
         self.assertRaises(expected, nm.average_except_one_point,
                           points, except_index)
@@ -176,7 +176,7 @@ class Test(unittest.TestCase):
         array = np.array([8])
         index = -34
 
-        expected = RuntimeError
+        expected = Exception
 
         self.assertRaises(expected, nm.shrink_points,
                           array, index)
@@ -207,7 +207,7 @@ class Test(unittest.TestCase):
         dimensions, function = fp.function_parsing(function_str)
         fun = lambda x: eval(function)
 
-        expected = RuntimeError
+        expected = Exception
 
         self.assertRaises(expected, nm.calculate_neldermead,
                           fun, dimensions, -1, -1, -1)
@@ -217,7 +217,7 @@ class Test(unittest.TestCase):
         dimensions, function = fp.function_parsing(function_str)
         fun = lambda x: eval(function)
 
-        expected = RuntimeError
+        expected = Exception
 
         self.assertRaises(expected, nm.calculate_neldermead,
                           fun, -1)

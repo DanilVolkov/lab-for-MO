@@ -7,7 +7,7 @@ def symmetrical_point(x1, x2, a):
 
 def average_except_one_point(array, exception_index):
     if exception_index < 0 or exception_index >= len(array):
-        raise RuntimeError
+        raise Exception("Incorrect index")
     average_point = (sum(array) - array[exception_index]) / (len(array) - 1)
     return average_point
 
@@ -32,7 +32,7 @@ def index_min_max(array):
 
 def shrink_points(array_points, center_index):
     if center_index < 0 or center_index >= len(array_points):
-        raise RuntimeError
+        raise Exception("Incorrect index")
     symmetrical_simplex = symmetrical_point(
         array_points, array_points[center_index], 0.5
     )
@@ -83,7 +83,7 @@ def calculate_neldermead(function, dimension, alpha=1.5, beta=1.5, gamma=1.5,
     if dimension == 0:
         return function(0)
     if alpha <= 0 or beta <= 1 or gamma <= 1 or dimension < 0:
-        raise RuntimeError
+        raise Exception("Invalid input data")
     simplex = np.eye(dimension + 1, dimension)
     iterations = 0
     while (iterations < max_iterations and not
