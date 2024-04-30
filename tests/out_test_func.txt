@@ -1,0 +1,1 @@
+(x[0]-1)2+(x[0]-2)2+math.sin(x[0])+math.exp**(x[2]-x[1])/(x[0]+x[1]) - math.sqrt(x[0]) + math.exp(x[1]) + math.sin(x[1]) + math.cos(x[3]) + math.tan(x[4]) + math.log(x[3],5)
