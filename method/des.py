@@ -146,10 +146,22 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u043e\u0434 \u041d\u0435\u043b\u0434\u0435\u0440\u0430-\u041c\u0438\u0434\u0430", None))
+        MainWindow.setWindowTitle(QCoreApplication.
+                                  translate("MainWindow", u"\u041c\u0435\u0442"
+                                            "\u043e\u0434 \u041d\u0435\u043b"
+                                            "\u0434\u0435\u0440\u0430-\u041c"
+                                            "\u0438\u0434\u0430", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"< x1 <", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"< x2 <", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0441\u0441\u0447\u0438\u0442\u0430\u0442\u044c", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0443\u0442 \u0431\u0443\u0434\u0443\u0442 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u044b \u0440\u0430\u0441\u0447\u0435\u0442\u0430", None))
+        self.pushButton.setText(QCoreApplication.
+                                translate("MainWindow", u"\u0420\u0430\u0441"
+                                          "\u0441\u0447\u0438\u0442\u0430"
+                                          "\u0442\u044c", None))
+        self.label.setText(QCoreApplication.
+                           translate("MainWindow", u"\u0422\u0443\u0442 "
+                                     "\u0431\u0443\u0434\u0443\u0442 \u0440"
+                                     "\u0435\u0437\u0443\u043b\u044c\u0442"
+                                     "\u0430\u0442\u044b \u0440\u0430\u0441"
+                                     "\u0447\u0435\u0442\u0430", None))
     # retranslateUi
 
