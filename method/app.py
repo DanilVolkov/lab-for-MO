@@ -159,6 +159,7 @@ class mywindow(QtWidgets.QMainWindow):
         output += "Q(X) = " + str(np.round(self.function(points), 4))
         self.ui.label.setText(output)
         self.ui.lineEdit.setEnabled(True)
+        self.interval_changed()
 
     def get_max_simplex_side(self):
         max = 0
