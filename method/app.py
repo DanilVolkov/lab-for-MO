@@ -39,7 +39,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.widget_2.fig = Figure()
         self.ui.widget_2.canvas = FigureCanvas(self.ui.widget_2.fig)
         self.ui.widget_2.axes = self.ui.widget_2.fig.add_subplot(111,
-                                                             projection='3d')
+                                                                 projection='3d')
         layout2 = QtWidgets.QVBoxLayout(self.ui.widget_2)
         layout2.addWidget(self.ui.widget_2.canvas)
         self.timer.timeout.connect(self.make_step)
@@ -54,6 +54,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.rightx1.setText(str(self.right_x1))
         self.ui.rightx2.setText(str(self.right_x2))
         self.ui.pushButton.clicked.connect(self.btnClicked)
+        self.ui.pushButton_2.clicked.connect(self.breakBtnClicked)
+        self.ui.pushButton_2.setEnabled(False)
 
     def function_changed(self, text):
         try:
@@ -65,6 +67,11 @@ class mywindow(QtWidgets.QMainWindow):
         except Exception:
             self.ui.pushButton.setEnabled(False)
 
+    def breakBtnClicked(self):
+        self.timer.stop()
+        points = np.round(sum(self.simplex) / (self.dimensions + 1), 5)
+        self.show_results(points)
+
     def btnClicked(self):
         self.ui.lineEdit.setEnabled(False)
         points = np.zeros(1)
@@ -72,6 +79,7 @@ class mywindow(QtWidgets.QMainWindow):
             self.simplex = np.eye(self.dimensions + 1, self.dimensions)
             self.iteration = 0
             self.ui.label.setText("Ищем минимум:)")
+            self.ui.pushButton_2.setEnabled(True)
             self.draw_simplex()
             self.draw_minisimplex()
             self.make_step()
@@ -121,31 +129,31 @@ class mywindow(QtWidgets.QMainWindow):
             z[i] = self.function(point)
             i += 1
         self.ui.widget_2.axes.scatter(self.simplex[:, 0],
-                                    self.simplex[:, 1],
-                                    z, edgecolors="red",
-                                    linewidth=4)
+                                      self.simplex[:, 1],
+                                      z, edgecolors="red",
+                                      linewidth=4)
         for i in range(self.dimensions + 1):
             for j in range(i, self.dimensions + 1):
                 self.ui.widget_2.axes.plot([self.simplex[i, 0],
-                                          self.simplex[j, 0]],
-                                         [self.simplex[i, 1],
-                                          self.simplex[j, 1]],
-                                         [z[i], z[j]],
-                                         color="r")
+                                           self.simplex[j, 0]],
+                                           [self.simplex[i, 1],
+                                           self.simplex[j, 1]],
+                                           [z[i], z[j]],
+                                           color="r")
         self.ui.widget_2.canvas.draw()
         self.ui.widget_2.show()
 
     def interval_changed(self):
-        if self.ui.leftx1.text().isdigit():
+        if self.ui.leftx1.text().lstrip('-+').isdigit():
             self.left_x1 = int(self.ui.leftx1.text())
 
-        if self.ui.leftx2.text().isdigit():
+        if self.ui.leftx2.text().lstrip('-+').isdigit():
             self.left_x2 = int(self.ui.leftx2.text())
 
-        if self.ui.rightx1.text().isdigit():
+        if self.ui.rightx1.text().lstrip('-+').isdigit():
             self.right_x1 = int(self.ui.rightx1.text())
 
-        if self.ui.rightx2.text().isdigit():
+        if self.ui.rightx2.text().lstrip('-+').isdigit():
             self.right_x2 = int(self.ui.rightx2.text())
 
         self.refresh_plot()
@@ -159,6 +167,7 @@ class mywindow(QtWidgets.QMainWindow):
         output += "Q(X) = " + str(np.round(self.function(points), 4))
         self.ui.label.setText(output)
         self.ui.lineEdit.setEnabled(True)
+        self.ui.pushButton_2.setEnabled(False)
         self.interval_changed()
 
     def get_max_simplex_side(self):
@@ -189,7 +198,8 @@ class mywindow(QtWidgets.QMainWindow):
                 d = self.get_max_simplex_side()
                 self.right_x2 += d
         X = []
-        grid_size = (max(self.right_x1, self.right_x2) - max(self.left_x1, self.left_x2)) / 20
+        grid_size = (max(self.right_x1, self.right_x2) -
+                     max(self.left_x1, self.left_x2)) / 20
         X.append(np.arange(self.left_x1, self.right_x1, grid_size))
         X.append(np.arange(self.left_x2, self.right_x2, grid_size))
         X[0], X[1] = np.meshgrid(X[0], X[1])
@@ -202,13 +212,15 @@ class mywindow(QtWidgets.QMainWindow):
         for ax in self.ui.widget_2.fig.axes:
             ax.clear()
         X = []
-        left1 = min(self.simplex[:, 0]) 
+        left1 = min(self.simplex[:, 0])
         right1 = max(self.simplex[:, 0])
-        left2 = min(self.simplex[:, 1]) 
+        left2 = min(self.simplex[:, 1])
         right2 = max(self.simplex[:, 1])
         grid_size = (min(right1, right2) - min(left1, left2)) / 10
-        X.append(np.arange(left1 - 3 * grid_size, right1 + 3 * grid_size, grid_size))
-        X.append(np.arange(left2 - 3 * grid_size, right2 + 3 * grid_size, grid_size))
+        X.append(np.arange(left1 - 3 * grid_size, right1 + 3 * grid_size,
+                           grid_size))
+        X.append(np.arange(left2 - 3 * grid_size, right2 + 3 * grid_size,
+                           grid_size))
         X[0], X[1] = np.meshgrid(X[0], X[1])
         Z = self.function(X)
         self.ui.widget_2.axes.plot_wireframe(X[0], X[1], Z)
