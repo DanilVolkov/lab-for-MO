@@ -82,14 +82,14 @@
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,5">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0">
         <property name="spacing">
          <number>0</number>
         </property>
         <property name="sizeConstraint">
          <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
         </property>
-        <item alignment="Qt::AlignmentFlag::AlignTop">
+        <item>
          <widget class="QLineEdit" name="lineEdit">
           <property name="minimumSize">
            <size>
@@ -260,12 +260,12 @@
           </item>
          </layout>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
+        <item>
          <widget class="QLabel" name="label">
           <property name="minimumSize">
            <size>
-            <width>170</width>
-            <height>170</height>
+            <width>150</width>
+            <height>150</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -282,7 +282,46 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignTop">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="minimumSize">
+             <size>
+              <width>170</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Скорсть симуляции (шаг/с)</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignmentFlag::AlignLeft">
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QWidget" name="widget_2" native="true">
           <property name="minimumSize">
            <size>

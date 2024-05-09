@@ -24,8 +24,8 @@ class Ui_MainWindow(object):
                                   QSizePolicy.Policy.Maximum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.centralwidget.sizePolicy().
-                                      hasHeightForWidth())
+        sizePolicy1.setHeightForWidth(self.centralwidget.
+                                      sizePolicy().hasHeightForWidth())
         self.centralwidget.setSizePolicy(sizePolicy1)
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setSpacing(0)
@@ -36,8 +36,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        sizePolicy.setHeightForWidth(self.widget.sizePolicy().
-                                     hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.widget.
+                                     sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setMinimumSize(QSize(550, 550))
         self.widget.setAutoFillBackground(False)
@@ -55,8 +55,7 @@ class Ui_MainWindow(object):
         self.lineEdit.setMinimumSize(QSize(120, 30))
         self.lineEdit.setMaximumSize(QSize(500, 16777215))
 
-        self.verticalLayout.addWidget(self.lineEdit, 0,
-                                      Qt.AlignmentFlag.AlignTop)
+        self.verticalLayout.addWidget(self.lineEdit)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -65,8 +64,8 @@ class Ui_MainWindow(object):
         self.leftx1.setMinimumSize(QSize(30, 0))
         self.leftx1.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_4.addWidget(self.leftx1, 0,
-                                          Qt.AlignmentFlag.AlignRight)
+        self.horizontalLayout_4.addWidget(self.leftx1, 0, Qt.AlignmentFlag.
+                                          AlignRight)
 
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
@@ -74,16 +73,16 @@ class Ui_MainWindow(object):
         self.label_2.setMaximumSize(QSize(120, 16777215))
         self.label_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout_4.addWidget(self.label_2, 0,
-                                          Qt.AlignmentFlag.AlignHCenter)
+        self.horizontalLayout_4.addWidget(self.label_2, 0, Qt.AlignmentFlag.
+                                          AlignHCenter)
 
         self.rightx1 = QLineEdit(self.centralwidget)
         self.rightx1.setObjectName(u"rightx1")
         self.rightx1.setMinimumSize(QSize(30, 0))
         self.rightx1.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_4.addWidget(self.rightx1, 0,
-                                          Qt.AlignmentFlag.AlignLeft)
+        self.horizontalLayout_4.addWidget(self.rightx1, 0, Qt.AlignmentFlag.
+                                          AlignLeft)
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
@@ -94,8 +93,8 @@ class Ui_MainWindow(object):
         self.leftx2.setMinimumSize(QSize(30, 0))
         self.leftx2.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_5.addWidget(self.leftx2, 0,
-                                          Qt.AlignmentFlag.AlignRight)
+        self.horizontalLayout_5.addWidget(self.leftx2, 0, Qt.AlignmentFlag.
+                                          AlignRight)
 
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
@@ -103,16 +102,16 @@ class Ui_MainWindow(object):
         self.label_3.setMaximumSize(QSize(120, 16777215))
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout_5.addWidget(self.label_3, 0,
-                                          Qt.AlignmentFlag.AlignHCenter)
+        self.horizontalLayout_5.addWidget(self.label_3, 0, Qt.AlignmentFlag.
+                                          AlignHCenter)
 
         self.rightx2 = QLineEdit(self.centralwidget)
         self.rightx2.setObjectName(u"rightx2")
         self.rightx2.setMinimumSize(QSize(30, 0))
         self.rightx2.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_5.addWidget(self.rightx2, 0,
-                                          Qt.AlignmentFlag.AlignLeft)
+        self.horizontalLayout_5.addWidget(self.rightx2, 0, Qt.AlignmentFlag.
+                                          AlignLeft)
 
         self.verticalLayout.addLayout(self.horizontalLayout_5)
 
@@ -137,12 +136,36 @@ class Ui_MainWindow(object):
 
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(170, 170))
+        self.label.setMinimumSize(QSize(150, 150))
         self.label.setMaximumSize(QSize(500, 500))
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout.addWidget(self.label, 0,
-                                      Qt.AlignmentFlag.AlignHCenter)
+        self.verticalLayout.addWidget(self.label)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.label_4 = QLabel(self.centralwidget)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setMinimumSize(QSize(170, 30))
+
+        self.horizontalLayout.addWidget(self.label_4)
+
+        self.lineEdit_2 = QLineEdit(self.centralwidget)
+        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed,
+                                  QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.lineEdit_2.sizePolicy().
+                                      hasHeightForWidth())
+        self.lineEdit_2.setSizePolicy(sizePolicy2)
+        self.lineEdit_2.setMinimumSize(QSize(30, 30))
+        self.lineEdit_2.setMaximumSize(QSize(30, 30))
+
+        self.horizontalLayout.addWidget(self.lineEdit_2, 0,
+                                        Qt.AlignmentFlag.AlignLeft)
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.widget_2 = QWidget(self.centralwidget)
         self.widget_2.setObjectName(u"widget_2")
@@ -150,10 +173,7 @@ class Ui_MainWindow(object):
         self.widget_2.setMaximumSize(QSize(250, 250))
         self.widget_2.setStyleSheet(u"")
 
-        self.verticalLayout.addWidget(self.widget_2, 0,
-                                      Qt.AlignmentFlag.AlignTop)
-
-        self.verticalLayout.setStretch(5, 5)
+        self.verticalLayout.addWidget(self.widget_2)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout)
 
@@ -210,4 +230,13 @@ class Ui_MainWindow(object):
                                                       "\u0440\u0430\u0441"
                                                       "\u0447\u0435\u0442"
                                                       "\u0430", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow",
+                                                        u"\u0421\u043a\u043e"
+                                                        "\u0440\u0441\u0442"
+                                                        "\u044c \u0441\u0438"
+                                                        "\u043c\u0443\u043b"
+                                                        "\u044f\u0446\u0438"
+                                                        "\u0438 (\u0448\u0430"
+                                                        "\u0433/\u0441)",
+                                                        None))
     # retranslateUi

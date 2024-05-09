@@ -7,6 +7,7 @@ from func_parser import function_parsing
 from nelder_mead import calculate_neldermead
 import nelder_mead as nm
 import sys
+import math
 
 
 class mywindow(QtWidgets.QMainWindow):
@@ -21,6 +22,7 @@ class mywindow(QtWidgets.QMainWindow):
     timer = QtCore.QTimer()
     simplex = np.eye(dimensions + 1, dimensions)
     iteration = 0
+    optimum_point = np.array([])
 
     def __init__(self):
         super(mywindow, self).__init__()
@@ -49,6 +51,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.leftx2.textEdited.connect(self.interval_changed)
         self.ui.rightx1.textEdited.connect(self.interval_changed)
         self.ui.rightx2.textEdited.connect(self.interval_changed)
+        self.ui.lineEdit_2.textEdited.connect(self.speed_changed)
+        self.ui.lineEdit_2.setText(str(1000 / self.delay))
         self.ui.leftx1.setText(str(self.left_x1))
         self.ui.leftx2.setText(str(self.left_x2))
         self.ui.rightx1.setText(str(self.right_x1))
@@ -57,11 +61,17 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.pushButton_2.clicked.connect(self.breakBtnClicked)
         self.ui.pushButton_2.setEnabled(False)
 
+    def speed_changed(self, text):
+        speed = float(text)
+        if speed > 0:
+            self.delay = int(1000 / speed)
+
     def function_changed(self, text):
         try:
             self.dimensions, function_str = function_parsing(text)
             self.function = lambda x: eval(function_str)
             if self.dimensions == 2:
+                self.optimum_point = np.array([])
                 self.refresh_plot()
             self.ui.pushButton.setEnabled(True)
         except Exception:
@@ -159,11 +169,13 @@ class mywindow(QtWidgets.QMainWindow):
         self.refresh_plot()
 
     def show_results(self, points):
+        self.optimum_point = points
         output = ""
         count = 1
-        for point in points:
-            output += "x" + str(count) + " = " + str(np.round(point, 2)) + "\n"
-            count += 1
+        if points is np.array:
+            for point in points:
+                output += "x" + str(count) + " = " + str(np.round(point, 2)) + "\n"
+                count += 1
         output += "Q(X) = " + str(np.round(self.function(points), 4))
         self.ui.label.setText(output)
         self.ui.lineEdit.setEnabled(True)
@@ -203,8 +215,18 @@ class mywindow(QtWidgets.QMainWindow):
         X.append(np.arange(self.left_x1, self.right_x1, grid_size))
         X.append(np.arange(self.left_x2, self.right_x2, grid_size))
         X[0], X[1] = np.meshgrid(X[0], X[1])
-        Z = self.function(X)
+        Z = np.zeros(X[0].shape)
+        for i in range(len(X[0])):
+            for j in range(len(X[0][0])):
+                temp_x = [X[0][i, j], X[1][i, j]]
+                Z[i, j] = self.function(temp_x)
         self.ui.widget.axes.plot_wireframe(X[0], X[1], Z)
+        if len(self.optimum_point) != 0:
+            self.ui.widget.axes.scatter(self.optimum_point[0],
+                                        self.optimum_point[1],
+                                        self.function(self.optimum_point),
+                                        edgecolors="red",
+                                        linewidth=4)
         self.ui.widget.canvas.draw()
         self.ui.widget.show()
 
@@ -222,7 +244,11 @@ class mywindow(QtWidgets.QMainWindow):
         X.append(np.arange(left2 - 3 * grid_size, right2 + 3 * grid_size,
                            grid_size))
         X[0], X[1] = np.meshgrid(X[0], X[1])
-        Z = self.function(X)
+        Z = np.zeros(X[0].shape)
+        for i in range(len(X[0])):
+            for j in range(len(X[0][0])):
+                temp_x = [X[0][i, j], X[1][i, j]]
+                Z[i, j] = self.function(temp_x)
         self.ui.widget_2.axes.plot_wireframe(X[0], X[1], Z)
         self.ui.widget_2.canvas.draw()
         self.ui.widget_2.show()
