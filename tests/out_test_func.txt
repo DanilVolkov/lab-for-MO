@@ -1,1 +1,1 @@
-(x[0]-1)2+(x[0]-2)2+math.sin(x[0])+math.exp**(x[2]-x[1])/(x[0]+x[1]) - math.sqrt(x[0]) + math.exp(x[1]) + math.sin(x[1]) + math.cos(x[3]) + math.tan(x[4]) + math.log(x[3],5)
+(x[0]-1)**2+(x[0]-2)**2+np.sin(x[0])+x[0]**(x[2]-x[1])/(x[0]+x[1]) - np.sqrt(x[0]) + np.exp(x[1]) + np.sin(x[1]) + np.cos(x[3]) + np.tan(x[4]) + np.emath.logn(5, x[3])
