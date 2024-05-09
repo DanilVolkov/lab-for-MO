@@ -7,7 +7,6 @@ from func_parser import function_parsing
 from nelder_mead import calculate_neldermead
 import nelder_mead as nm
 import sys
-import math
 
 
 class mywindow(QtWidgets.QMainWindow):
