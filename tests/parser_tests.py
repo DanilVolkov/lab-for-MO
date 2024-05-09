@@ -56,3 +56,10 @@ class Test(unittest.TestCase):
         parsed_str = fp.function_parsing(str)[1]
         # expected = "(x[0]-1)**2+(x[0]-2)+np.sin(x[0])+np.exp**(x[2]-x[1])"
         self.assertEqual(parsed_str, expected)
+        
+    def test_replace_log(self):
+        str = "ln(x1) + ln(x2) - log(4, x3) + 4*log(5, x1)"
+        replace_log = fp.replace_log(str)
+
+        expected = "np.log(x1) + np.log(x2) - np.emath.logn(4, x3) + 4*np.emath.logn(5, x1)"
+        self.assertEqual(replace_log, expected)

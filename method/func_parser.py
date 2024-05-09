@@ -34,8 +34,8 @@ def count_variables(func: str) -> int:
 
 
 def replace_log(func: str) -> str:
-    func = re.sub("ln", "np.log", func)
     func = re.sub("log", "np.emath.logn", func)
+    func = re.sub("ln", "np.log", func)
     return func
 
 
