@@ -1,10 +1,10 @@
 import re
 
 
-def add_math(func: str) -> str:
+def add_np(func: str) -> str:
     patterns = ["sqrt", "exp", "sin", "cos", "tan", "pi"]
     for pattern in patterns:
-        func = re.sub(pattern, "math." + pattern, func)
+        func = re.sub(pattern, "np." + pattern, func)
     func = replace_log(func)
     return func
 
@@ -34,8 +34,8 @@ def count_variables(func: str) -> int:
 
 
 def replace_log(func: str) -> str:
-    func = re.sub("ln", "np.log", func)
     func = re.sub("log", "np.emath.logn", func)
+    func = re.sub("ln", "np.log", func)
     return func
 
 
@@ -43,6 +43,6 @@ def function_parsing(func: str) -> tuple[int, str]:
     check_for_correct_func(func)
     func = add_brackets_and_indexes(func)
     func_result = repl_pow_sym(func)
-    func_result = add_math(func_result)
+    func_result = add_np(func_result)
     dimensions = count_variables(func_result)
     return dimensions, func_result
