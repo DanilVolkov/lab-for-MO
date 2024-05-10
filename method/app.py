@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
-from des import Ui_MainWindow
+from des import UiMainWindow
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
@@ -25,8 +25,8 @@ class mywindow(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(mywindow, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        self.ui = UiMainWindow()
+        self.ui.setup_ui(self)
         self.ui.widget.fig = Figure()
         self.ui.widget.canvas = FigureCanvas(self.ui.widget.fig)
         self.ui.widget.axes = self.ui.widget.fig.add_subplot(111,
@@ -56,8 +56,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.leftx2.setText(str(self.left_x2))
         self.ui.rightx1.setText(str(self.right_x1))
         self.ui.rightx2.setText(str(self.right_x2))
-        self.ui.pushButton.clicked.connect(self.btnClicked)
-        self.ui.pushButton_2.clicked.connect(self.breakBtnClicked)
+        self.ui.pushButton.clicked.connect(self.btn_clicked)
+        self.ui.pushButton_2.clicked.connect(self.break_btn_clicked)
         self.ui.pushButton_2.setEnabled(False)
 
     def speed_changed(self, text):
@@ -76,12 +76,12 @@ class mywindow(QtWidgets.QMainWindow):
         except Exception:
             self.ui.pushButton.setEnabled(False)
 
-    def breakBtnClicked(self):
+    def break_btn_clicked(self):
         self.timer.stop()
         points = np.round(sum(self.simplex) / (self.dimensions + 1), 5)
         self.show_results(points)
 
-    def btnClicked(self):
+    def btn_clicked(self):
         self.ui.lineEdit.setEnabled(False)
         points = np.zeros(1)
         if self.dimensions == 2:

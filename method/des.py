@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import (QGridLayout, QHBoxLayout, QLabel,
                              QSizePolicy, QStatusBar, QVBoxLayout, QWidget)
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+class UiMainWindow(object):
+    def setup_ui(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(810, 575)
