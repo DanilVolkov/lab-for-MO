@@ -3,7 +3,6 @@ from func_parser import function_parsing
 import numpy as np   # noqa F401
 
 
-print(np.emath.logn(14, 0))
 with open("method/input.txt") as file:
     for line in file:
         function = line.rstrip('\n')
