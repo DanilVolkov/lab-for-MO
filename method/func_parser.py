@@ -1,5 +1,7 @@
 import re
 
+from typing import Tuple
+
 
 def add_np(func: str) -> str:
     patterns = ["sqrt", "exp", "sin", "cos", "tan", "pi"]
@@ -39,7 +41,7 @@ def replace_log(func: str) -> str:
     return func
 
 
-def function_parsing(func: str) -> tuple[int, str]:
+def function_parsing(func: str) -> Tuple[int, str]:
     check_for_correct_func(func)
     func = add_brackets_and_indexes(func)
     func_result = repl_pow_sym(func)

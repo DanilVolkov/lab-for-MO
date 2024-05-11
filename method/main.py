@@ -3,7 +3,7 @@ from func_parser import function_parsing
 import numpy as np   # noqa F401
 
 
-with open("method/input.txt") as file:
+with open("input.txt") as file:
     for line in file:
         function = line.rstrip('\n')
         print(function)
@@ -12,3 +12,4 @@ with open("method/input.txt") as file:
         point = calculate_neldermead(function_x, dimensions)
         print(*point)
         print(function_x(point))
+        print()

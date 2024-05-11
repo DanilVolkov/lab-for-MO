@@ -48,10 +48,10 @@ class Test(unittest.TestCase):
         self.assertEqual(num_of_variables, expected)
 
     def test_parser(self):
-        with open("tests/test_func.txt") as file:
+        with open("test_func.txt") as file:
             str = file.read().rstrip('\n')
         # str = "(x1-1)^2+(x1-2)+sin(x1)+exp^(x3-x2)"
-        with open("tests/out_test_func.txt") as file:
+        with open("out_test_func.txt") as file:
             expected = file.read().rstrip('\n')
         parsed_str = fp.function_parsing(str)[1]
         # expected = "(x[0]-1)**2+(x[0]-2)+np.sin(x[0])+np.exp**(x[2]-x[1])"
